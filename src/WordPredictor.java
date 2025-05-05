@@ -116,6 +116,33 @@ public class WordPredictor {
         // On my computer the linear version causes the tests to take about 20seconds, and the log
         // version runs in less than two. Your results may vary.
         // Hint: The Random class has an instance method "nextDouble" that returns a value in the range [0., 1.]
-        return null;
+
+
+        // Pick a random threshhold
+        double target = rng.nextDouble();
+        List<WordProbability> listOfWords = probs.get(word);
+        int low = 0;
+        int high = listOfWords.size() - 1;
+
+        // USE BS logic to return which string matches (low, mid, high)
+        // NOTE: get FIRST VALID WORD
+        while (low >= high) {
+            // cumulative probability for mid word
+            int mid = (low + high) / 2;
+            WordProbability checkWord = listOfWords.get(mid);
+            double checkProbability = checkWord.cumulativeProbability();
+
+            // if mid works, and there is none before it OR if this word works and the word before it does not, return this word
+            if (checkProbability >= target && (mid == 0 || listOfWords.get(mid - 1).cumulativeProbability() < target)) {
+                // return that string
+                return checkWord.word();
+            } else if (checkProbability >= target) {
+                high = mid - 1;
+            } else if (checkProbability < target) {
+                low = mid + 1;
+            }
+        }
+
+        throw new IllegalArgumentException();
     }
 }
