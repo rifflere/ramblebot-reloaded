@@ -137,4 +137,21 @@ public class WordPredictor {
             }
         }
     }
+
+
+
+    // public String predict(String word) {
+    //     // This version is much less efficient!!!
+
+    //     // Pick a random threshhold
+    //     double target = rng.nextDouble();
+    //     List<WordProbability> listOfWords = probs.get(word);
+
+    //     for (int i = 0; i < listOfWords.size(); i++) {
+    //         if (listOfWords.get(i).cumulativeProbability() >= target) {
+    //             return listOfWords.get(i).word();
+    //         }
+    //     }
+    //     return null;
+    // }
 }
