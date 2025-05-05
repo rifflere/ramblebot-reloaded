@@ -111,22 +111,16 @@ public class WordPredictor {
      * @return the predicted next word
      */
     public String predict(String word) {
-        // Implement this so it runs in O(log(n)) time where n is probs.get(word).size()
-        // Having a hard time getting started? Implement it in O(n) time first, then optimize.
-        // On my computer the linear version causes the tests to take about 20seconds, and the log
-        // version runs in less than two. Your results may vary.
-        // Hint: The Random class has an instance method "nextDouble" that returns a value in the range [0., 1.]
-
-
         // Pick a random threshhold
         double target = rng.nextDouble();
         List<WordProbability> listOfWords = probs.get(word);
+
+        // set low and high pointers
         int low = 0;
         int high = listOfWords.size() - 1;
 
         // USE BS logic to return which string matches (low, mid, high)
-        // NOTE: get FIRST VALID WORD
-        while (low >= high) {
+        while (true) {
             // cumulative probability for mid word
             int mid = (low + high) / 2;
             WordProbability checkWord = listOfWords.get(mid);
@@ -142,7 +136,5 @@ public class WordPredictor {
                 low = mid + 1;
             }
         }
-
-        throw new IllegalArgumentException();
     }
 }
